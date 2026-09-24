@@ -1,0 +1,33 @@
+clc;
+clear;
+close all;
+
+I = imread('blobs.png');
+
+figure;
+imshow(I);
+title('Original Image');
+
+% Create disk-shaped structuring element
+se = strel('square', 3);
+
+% Erosion
+erodedImg = imerode(I, se);
+
+% Dilation
+dilatedImg = imdilate(erodedImg, se);
+
+% Display results
+figure;
+
+subplot(1,3,1);
+imshow(I);
+title('Original Image');
+
+subplot(1,3,2);
+imshow(erodedImg);
+title('Eroded Image');
+
+subplot(1,3,3);
+imshow(dilatedImg);
+title('Dilated Image');
