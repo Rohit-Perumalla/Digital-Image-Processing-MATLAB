@@ -1,0 +1,38 @@
+clc;
+clear;
+close all;
+
+% Read the input image
+I = imread('coins.png');
+
+% Display the original image
+figure;
+imshow(I);
+title('Original Image');
+
+% Display the image histogram
+figure;
+imhist(I);
+title('Image Histogram');
+
+% Calculate threshold using Otsu's method
+T = graythresh(I);
+
+% Perform segmentation using Otsu threshold
+BW = imbinarize(I, T);
+
+% Display Otsu segmented image
+figure;
+imshow(BW);
+title(['Segmented Image, Threshold = ', num2str(T)]);
+
+% Set manual threshold
+T_manual = 0.35;
+
+% Perform segmentation using manual threshold
+BW_manual = imbinarize(I, T_manual);
+
+% Compare Otsu and manual threshold segmentation
+figure;
+imshowpair(BW, BW_manual, 'montage');
+title('Otsu vs Manual Threshold Segmentation');
