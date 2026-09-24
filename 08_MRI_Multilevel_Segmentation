@@ -1,0 +1,41 @@
+clc;
+clear;
+close all;
+
+I = dicomread('knee1');
+knee = mat2gray(I);
+
+figure;
+imshow(knee);
+title('Original Image');
+
+figure;
+imhist(knee);
+title('Histogram of Knee Image');
+xlabel('Normalized Intensity');
+ylabel('Pixel Count');
+
+t1 = 0.2;
+t2 = 0.4;
+
+[rows, cols] = size(knee);
+
+segrgb = zeros(rows, cols, 3);
+
+for r = 1:rows
+    for c = 1:cols
+        val = knee(r,c);
+
+        if val < t1
+            segrgb(r,c,:) = [0 0 0];       % Black
+        elseif val < t2
+            segrgb(r,c,:) = [1, 0, 0];       % Red
+        else
+            segrgb(r,c,:) = [0, 1, 0];       % Green
+        end
+    end
+end
+
+figure;
+imshow(segrgb);
+title('Multi-Level Segmentation');
